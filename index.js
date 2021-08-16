@@ -29,6 +29,23 @@ app.get('/issue', async (req, res) =>{
     const record= await Issue.find({})
     res.json(record)
 })
+
+app.post('/allIssues', async (req, res) => {
+    let result = [];
+    if (req.body.length) {
+        for (let index = 0; index < req.body.length; index++) {
+            const issue = await Issue.find({ '_id': req.body[index] })
+            result.push(issue[0]);
+        }
+    }
+    res.json(result)
+})
+
+app.get('/issue/epic', async (req, res) =>{
+    const record= await Issue.find({'name':'Epic'})
+    res.json(record)
+})
+
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`)
   })
